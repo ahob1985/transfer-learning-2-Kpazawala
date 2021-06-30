@@ -9,6 +9,7 @@ let buttonDiv;
 let happyButton;
 let sadButton;
 let trainButton;
+let saveButton;
 
 // Global ML Variables
 let featureExtractor;
@@ -64,11 +65,22 @@ function buildButtons() {
   trainButton.mousePressed(function () {
     // new code blow
 
+    happyButton.style("display", "none");
+    sadButton.style("display", "none");
+    trainButton.style("display", "none");
+
+
     textP.html("New model training, please wait...");
     classifier.train(whileTraining);
   });
   // new code below
+  saveButton = createButton("Save Model");
+  saveButton.parent(buttonDiv);
+  saveButton.mousePressed(function (){
+    classifier.save();
+  });
 
+  saveButton.style("display", "none");
   buttonDiv.style("display", "none");
 }
 
@@ -92,7 +104,7 @@ function whileTraining(loss) {
     console.log(loss);
   } else {
     // new code below
-
+    saveButton.style("display", "inline");
     isTrainingComplete = true;
   }
 }
